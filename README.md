@@ -1,4 +1,4 @@
-## 麻雀大会用プログラム
+## 麻雀大会用プログラム(Create takugumi_4team_pivot.py　の解説)
 
 ### 概要
 
