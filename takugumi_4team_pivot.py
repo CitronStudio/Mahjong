@@ -3,10 +3,13 @@ import os
 import time
 import pandas as pd
 
+# ピボットを全行出力する
+pd.set_option('display.max_rows', None)
+
 # 実行開始時刻を記録
 start_time = time.time()
 
-# 参加者を設定。memberは4の倍数にすること
+# 参加者及び試合数を設定。memberは4の倍数にすること
 member = 36
 game_count = 5
 
@@ -29,7 +32,7 @@ def int_to_letter(n):
     if 1 <= n <= 26:
         return chr(ord('A') + n - 1)
     else:
-        raise ValueError("Input must be an integer between 1 and 26.")
+        return chr(ord('A') + round((n - 1) // 26) - 1) + chr(ord('A') + (n - 1) % 26)
 
 def generate_match(team1, team2, team3, team4, match_history): 
     # team1から一人選ぶ
@@ -119,10 +122,6 @@ while True:
 # 実行終了時刻を記録
 end_time = time.time()
 
-# ピボット解除して再ピボットするためのデータフレームを作成
-columns = ['Game', 'Table', 'Player']
-df = pd.DataFrame(game_records, columns=columns)
-
 # 各プレイヤーの各ゲームごとのテーブルを追跡
 player_tables = {}
 for game, table, player in game_records:
@@ -136,7 +135,7 @@ df_pivot = pd.DataFrame.from_dict(player_tables, orient='index').fillna('')
 # プレイヤーを昇順にソート
 df_pivot = df_pivot.sort_index()
 
-# 表示
+# ピボットを表示
 print(df_pivot)
 print()
 
